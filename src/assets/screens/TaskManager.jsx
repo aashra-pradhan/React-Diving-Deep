@@ -12,6 +12,7 @@ const TaskManager = () => {
   const { register, handleSubmit } = useForm({});
   const [input, setInput] = useState("");
   const [todosResponse, setTodosResponse] = useState([]);
+  const [completedTodosResponse, setCompletedTodosResponse] = useState([]);
   const todoRef = useRef(null);
   async function getAllTodos() {
     const apiDetails = {
@@ -31,6 +32,21 @@ const TaskManager = () => {
   useEffect(() => {
     getAllTodos();
   }, []);
+
+  async function getCompletedToDos() {
+    const apiDetails = {
+      urlEndpoint: "/completed-todos",
+      requestMethod: "GET",
+    };
+
+    let apiResponse = await apiRequest(apiDetails);
+    setCompletedTodosResponse(apiResponse.data.todos);
+    console.log(apiResponse, "comppp");
+
+    if (apiResponse.status != 200 && apiResponse.status != 201) {
+      toast.error(apiResponse.data.message);
+    }
+  }
 
   const data = useMemo(
     () =>
@@ -156,6 +172,14 @@ const TaskManager = () => {
             <Button type="submit" value="Add" variant="normal" />
           </div>
         </form>
+        <div className="flex items-center justify-center mt-5">
+          <Button
+            type="button"
+            value="Show Completed Todos"
+            variant="normal"
+            onClickFunction={getCompletedToDos}
+          />
+        </div>
         <div className="table-container flex items-center justify-center mt-8">
           <Table
             data={data}

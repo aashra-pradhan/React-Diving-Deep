@@ -7,7 +7,7 @@ const Button = ({ type, value, onClickFunction, variant, icon }) => {
         <button
           type={type}
           onClick={onClickFunction}
-          className="border-2 h-[55px] max-w-32 bg-cyan-400 border-orange-200 rounded-md font-sans	text-xl	font-semibold p-5 flex items-center"
+          className="border-2 h-[55px] max-w-100 bg-cyan-400 border-orange-200 rounded-md font-sans	text-xl	font-semibold p-5 flex items-center"
         >
           {icon ? icon : value}
         </button>
